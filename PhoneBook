@@ -1,0 +1,71 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class PhoneBook {
+    List<Record> allNumbers;
+    List<Long> allId;
+
+    public PhoneBook (List<Record> allNumbers){
+        this.allNumbers = allNumbers;
+        this.allId = new ArrayList<Long>();
+    }
+
+    public class PhoneNumberAlreadyExists extends Exception {
+        public PhoneNumberAlreadyExists(String message) {
+            super(message);
+        }
+    }
+
+    public void createRecord(Record record) throws PhoneNumberAlreadyExists {
+        if (allNumbers.contains(record)) {
+            throw new PhoneNumberAlreadyExists("Этот номер уже добавлен");
+        } else {
+            allNumbers.add(record);
+            allId.add(record.id);
+        }
+    }
+
+    public class RecordNotFound extends Error {
+        public RecordNotFound(String message) {
+            super(message);
+        }
+    }
+
+    public class RecordNotValid extends Exception {
+        public RecordNotValid(String message) {
+            super(message);
+        }
+    }
+
+    public void updateRecord(Record record) throws RecordNotFound, RecordNotValid {
+        if (record.name == "" || record.phoneNumber == "") {
+           throw new RecordNotValid("Некорректное имя или номер");
+        } else if (allId.contains(record.id)) {
+            for (Record rec : allNumbers) {
+                if (rec.id == record.id) {
+                    rec.phoneNumber = record.phoneNumber;
+                    rec.name = record.name;
+                }
+            }
+        } else {
+            throw new RecordNotFound("Несуществующий id");
+        }
+    }
+    public List<Record> getAllRecords() {
+        return allNumbers;
+    }
+
+    public void deleteRecord(long id) throws RecordNotFound {
+        if (allId.contains(id)) {
+            for (Record rec : allNumbers) {
+                if (rec.id == id) {
+                    allNumbers.remove(rec);
+                    allId.remove(id);
+                }
+            }
+        } else {
+            throw new RecordNotFound("Удаление ошибка");
+        }
+    }
+}
+
