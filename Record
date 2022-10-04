@@ -1,0 +1,15 @@
+public class Record {
+    public String name;
+    public String phoneNumber;
+    public long id;
+
+    public Record(String name, String phoneNumber, long id){
+        this.id = id;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+    @Override
+    public String toString() {
+        return "Имя: " + name + ", id: " + id + ", номер телефона: " + phoneNumber;
+    }
+}
