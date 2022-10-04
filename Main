@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+
+public class main {
+    public static void main(String[] args) {
+        PhoneBook phoneBook = new PhoneBook(new ArrayList<>());
+        Record record1 = new Record("ff","001",1);
+        Record record2 = new Record("xxx","020",2);
+        Record record3 = new Record("xxx","",1);
+        Record record4 = new Record("xxx","v",1);
+        try {
+            phoneBook.createRecord(record1);
+            phoneBook.createRecord(record2);
+            phoneBook.createRecord(record1);
+            phoneBook.updateRecord(record2);
+            phoneBook.updateRecord(record3);
+            System.out.println(phoneBook.getAllRecords());
+            phoneBook.updateRecord(record4);
+            System.out.println(phoneBook.getAllRecords());
+            phoneBook.deleteRecord(1);
+            System.out.println(phoneBook.getAllRecords());
+
+        } catch (PhoneBook.PhoneNumberAlreadyExists e) {
+            System.out.println(e.getMessage());
+        } catch (PhoneBook.RecordNotFound e) {
+            System.out.println(e.getMessage());
+        } catch (PhoneBook.RecordNotValid e) {
+            System.out.println(e.getMessage());
+        }
+
+
+
+    }
+}
